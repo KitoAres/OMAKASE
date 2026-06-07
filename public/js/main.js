@@ -1,6 +1,6 @@
 // Configuración de Supabase (Reemplaza con tus llaves reales de Supabase)
 const SUPABASE_URL = "https://oixnuwadkqoycuxbkufh.supabase.co";
-const SUPABASE_ANON_KEY = "PEGA_AQUÍ_TU_ANON_PUBLIC_KEY";
+const SUPABASE_ANON_KEY = "sb_publishable_PYDGVjNVtoutiRs8mBT_mw_ExT9UxAb";
 
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

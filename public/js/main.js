@@ -358,7 +358,12 @@ function actualizarDashboard(
         metas.innerText = objetivos;
 
     actualizarNivelUsuario();
+
+    actualizarProgresoNivel();
+
+    actualizarRacha();
 }
+
 
 // =====================================
 // LOCAL STORAGE
@@ -460,4 +465,106 @@ function actualizarNivelUsuario() {
         fichasElemento.innerText =
             fichas;
 }
+
+
+function actualizarProgresoNivel() {
+
+    const fichas =
+        Number(
+            localStorage.getItem(
+                "omakase_fichas"
+            )
+        ) || 0;
+
+    let porcentaje = 0;
+
+    if (fichas < 100) {
+
+        porcentaje =
+            (fichas / 100) * 100;
+
+    }
+    else if (fichas < 300) {
+
+        porcentaje =
+            ((fichas - 100) / 200) * 100;
+
+    }
+    else if (fichas < 600) {
+
+        porcentaje =
+            ((fichas - 300) / 300) * 100;
+
+    }
+    else {
+
+        porcentaje = 100;
+    }
+
+    const barra =
+        document.getElementById(
+            "level-progress"
+        );
+
+    const texto =
+        document.getElementById(
+            "progress-text"
+        );
+
+    if (barra)
+        barra.style.width =
+            porcentaje + "%";
+
+    if (texto)
+        texto.innerText =
+            Math.round(
+                porcentaje
+            ) +
+            "% completado";
+}
+
+
+function actualizarRacha() {
+
+    let racha =
+        Number(
+            localStorage.getItem(
+                "omakase_streak"
+            )
+        ) || 0;
+
+    const hoy =
+        new Date()
+        .toDateString();
+
+    const ultimoDia =
+        localStorage.getItem(
+            "omakase_last_day"
+        );
+
+    if (ultimoDia !== hoy) {
+
+        racha++;
+
+        localStorage.setItem(
+            "omakase_streak",
+            racha
+        );
+
+        localStorage.setItem(
+            "omakase_last_day",
+            hoy
+        );
+    }
+
+    const elemento =
+        document.getElementById(
+            "user-streak"
+        );
+
+    if (elemento)
+        elemento.innerText =
+            racha;
+}
+
 

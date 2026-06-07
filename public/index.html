@@ -4,89 +4,413 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMAKASE - Bienestar Digital</title>
+
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Incluimos la librería oficial de Supabase desde CDN -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
-    <!-- PANTALLA DE AUTENTICACIÓN -->
-    <div id="auth-container" class="auth-wrapper">
-        <div class="auth-card">
-            <h2 id="auth-title">Iniciar Sesión en OMAKASE</h2>
-            <form id="auth-form">
-                <div class="form-group" id="name-field" style="display: none;">
-                    <label for="auth-name">Nombre Completo</label>
-                    <input type="text" id="auth-name" placeholder="Tu nombre">
-                </div>
-                <div class="form-group">
-                    <label for="auth-email">Correo Electrónico</label>
-                    <input type="email" id="auth-email" required placeholder="correo@ejemplo.com">
-                </div>
-                <div class="form-group">
-                    <label for="auth-password">Contraseña</label>
-                    <input type="password" id="auth-password" required placeholder="******">
-                </div>
-                <button type="submit" id="btn-auth-submit" class="btn-primary">Ingresar</button>
-            </form>
-            <p id="auth-toggle">¿No tienes una cuenta? <span onclick="toggleAuthMode()">Regístrate aquí</span></p>
+<!-- =======================================
+     LOGIN / REGISTRO
+======================================= -->
+
+<div id="auth-container" class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <h2 id="auth-title">
+            Iniciar Sesión en OMAKASE
+        </h2>
+
+        <form id="auth-form">
+
+            <div
+                class="form-group"
+                id="name-field"
+                style="display:none;"
+            >
+                <label>Nombre Completo</label>
+
+                <input
+                    type="text"
+                    id="auth-name"
+                    placeholder="Tu nombre completo"
+                >
+            </div>
+
+            <div class="form-group">
+
+                <label>Correo Electrónico</label>
+
+                <input
+                    type="email"
+                    id="auth-email"
+                    required
+                    placeholder="correo@ejemplo.com"
+                >
+            </div>
+
+            <div class="form-group">
+
+                <label>Contraseña</label>
+
+                <input
+                    type="password"
+                    id="auth-password"
+                    required
+                    placeholder="********"
+                >
+            </div>
+
+            <button
+                type="submit"
+                id="btn-auth-submit"
+                class="btn-primary"
+            >
+                Ingresar
+            </button>
+
+        </form>
+
+        <p id="auth-toggle">
+            ¿No tienes una cuenta?
+            <span onclick="toggleAuthMode()">
+                Regístrate aquí
+            </span>
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =======================================
+     APP
+======================================= -->
+
+<div id="app-container" style="display:none;">
+
+    <header>
+
+        <div class="logo">
+            OMAKASE
         </div>
-    </div>
 
-    <!-- PANTALLA PRINCIPAL DE LA APP (OCULTA POR DEFECTO) -->
-    <div id="app-container" style="display: none;">
-        <header>
-            <div class="logo">OMAKASE</div>
-            <nav>
+        <nav>
+            <ul>
+
+                <li>
+                    <a href="#inicio">
+                        Panel Principal
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#uso-pantalla">
+                        Uso de Pantalla
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#mindfulness">
+                        Mindfulness
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#economia">
+                        Economía de Fichas
+                    </a>
+                </li>
+
+                <li
+                    id="menu-admin"
+                    style="display:none;"
+                >
+                    <a href="#admin-panel">
+                        <i class="fas fa-user-shield"></i>
+                        Admin
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Salir
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <!-- =======================
+             DASHBOARD
+        ======================== -->
+
+        <section
+            id="inicio"
+            class="dashboard-section"
+        >
+
+            <h1>
+                Bienvenido a tu Espacio Seguro
+            </h1>
+
+            <p>
+                Monitorea tu uso digital y fortalece
+                hábitos saludables.
+            </p>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <i class="fas fa-mobile-alt"></i>
+
+                    <h3>
+                        Tiempo de Pantalla
+                    </h3>
+
+                    <p
+                        class="stat-value"
+                        id="screen-time-card"
+                    >
+                        0 h
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <i class="fas fa-coins"></i>
+
+                    <h3>
+                        Fichas Ganadas
+                    </h3>
+
+                    <p
+                        class="stat-value"
+                        id="user-tokens"
+                    >
+                        0
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <i class="fas fa-check-circle"></i>
+
+                    <h3>
+                        Objetivos Cumplidos
+                    </h3>
+
+                    <p
+                        class="stat-value"
+                        id="completed-goals"
+                    >
+                        0
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =======================
+             USO DE PANTALLA
+        ======================== -->
+
+        <section
+            id="uso-pantalla"
+            class="module-section"
+        >
+
+            <div class="feature-card">
+
+                <h2>
+                    Diagnóstico de Uso de Pantalla
+                </h2>
+
+                <p>
+                    Ingresa cuántas horas utilizas
+                    cada aplicación por semana.
+                </p>
+
+                <br>
+
+                <label>TikTok</label>
+                <input
+                    type="number"
+                    id="tiktok-hours"
+                    placeholder="Horas por semana"
+                >
+
+                <label>Facebook</label>
+                <input
+                    type="number"
+                    id="facebook-hours"
+                    placeholder="Horas por semana"
+                >
+
+                <label>Instagram</label>
+                <input
+                    type="number"
+                    id="instagram-hours"
+                    placeholder="Horas por semana"
+                >
+
+                <label>YouTube</label>
+                <input
+                    type="number"
+                    id="youtube-hours"
+                    placeholder="Horas por semana"
+                >
+
+                <button
+                    class="btn-primary"
+                    id="calculate-screen-time"
+                >
+                    Calcular Tiempo Total
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- =======================
+             MINDFULNESS
+        ======================== -->
+
+        <section
+            id="mindfulness"
+            class="module-section"
+        >
+
+            <div class="feature-card">
+
+                <h2>
+                    Ejercicio de Mindfulness
+                </h2>
+
+                <p>
+                    Técnica de respiración 4-4-4.
+                </p>
+
+                <br>
+
+                <ol>
+
+                    <li>
+                        Inhala durante 4 segundos.
+                    </li>
+
+                    <li>
+                        Mantén el aire 4 segundos.
+                    </li>
+
+                    <li>
+                        Exhala durante 4 segundos.
+                    </li>
+
+                    <li>
+                        Repite durante 1 minuto.
+                    </li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+        <!-- =======================
+             ECONOMÍA DE FICHAS
+        ======================== -->
+
+        <section
+            id="economia"
+            class="module-section"
+        >
+
+            <div class="feature-card">
+
+                <h2>
+                    Economía de Fichas
+                </h2>
+
+                <p>
+                    Gana fichas reduciendo
+                    tu tiempo de pantalla.
+                </p>
+
+                <br>
+
                 <ul>
-                    <li><a href="#inicio">Panel Principal</a></li>
-                    <li><a href="#mindfulness">Mindfulness</a></li>
-                    <li><a href="#economia">Economía de Fichas</a></li>
-                    <li id="menu-admin" style="display: none;"><a href="#admin-panel" style="color: #ff7675;"><i class="fas fa-user-shield"></i> Admin</a></li>
-                    <li><a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+
+                    <li>
+                        Menos de 14 horas →
+                        +100 fichas
+                    </li>
+
+                    <li>
+                        Menos de 21 horas →
+                        +50 fichas
+                    </li>
+
+                    <li>
+                        Más de 21 horas →
+                        +10 fichas
+                    </li>
+
                 </ul>
-            </nav>
-        </header>
 
-        <main>
-            <!-- Panel Principal -->
-            <section id="inicio" class="dashboard-section">
-                <h1>Bienvenido a tu Espacio Seguro</h1>
-                <p>Monitorea y mejora tu atención sostenida.</p>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>Tiempo de Pantalla</h3>
-                        <p class="stat-value">1h 45m</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-brain"></i>
-                        <h3>Nivel de Ansiedad</h3>
-                        <p class="stat-value">Bajo</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-coins"></i>
-                        <h3>Fichas Ganadas</h3>
-                        <p class="stat-value" id="user-tokens">0</p>
-                    </div>
-                </div>
-            </section>
+            </div>
 
-            <!-- Sección Admin (Oculta para usuarios normales) -->
-            <section id="admin-panel" class="module-section" style="display: none;">
-                <h2><i class="fas fa-user-shield"></i> Panel de Administración General</h2>
-                <p>Monitoreo global de la plataforma.</p>
-                <div class="tasks-container">
-                    <h3>Usuarios Registrados en OMAKASE</h3>
-                    <ul class="task-list" id="admin-users-list">
-                        <!-- Aquí se cargarán dinámicamente todos los usuarios -->
-                    </ul>
-                </div>
-            </section>
-        </main>
-    </div>
+        </section>
 
-    <script src="js/main.js"></script>
+        <!-- =======================
+             ADMIN
+        ======================== -->
+
+        <section
+            id="admin-panel"
+            class="module-section"
+            style="display:none;"
+        >
+
+            <div class="tasks-container">
+
+                <h2>
+                    Panel de Administración
+                </h2>
+
+                <br>
+
+                <ul
+                    class="task-list"
+                    id="admin-users-list"
+                >
+
+                </ul>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/main.js"></script>
+
 </body>
 </html>

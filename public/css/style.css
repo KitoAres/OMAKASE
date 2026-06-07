@@ -104,3 +104,20 @@ button {
 a {
     cursor: pointer !important;
 }
+
+
+.dashboard-section {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.dashboard-section h1 {
+    margin-top: 0;
+    font-size: 2rem;
+}
+
+.dashboard-section p {
+    color: #64748b;
+}

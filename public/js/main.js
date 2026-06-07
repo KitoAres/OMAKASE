@@ -40,25 +40,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            if (data.user) {
+if (data.user) {
 
-                const { error: perfilError } =
-                    await supabaseClient
-                        .from('perfiles_usuarios')
-                        .insert([
-                            {
-                                id: data.user.id,
-                                nombre_completo: nombre
-                            }
-                        ]);
-
-                if (perfilError) {
-                    console.error(perfilError);
-                }
-
-                alert("Registro exitoso");
-                toggleAuthMode();
+    const { error: perfilError } = await supabaseClient
+        .from('perfiles_usuarios')
+        .insert([
+            {
+                id: data.user.id,
+                nombre_completo: nombre
             }
+        ]);
+
+    if (perfilError) {
+        console.error("Error creando perfil:", perfilError);
+        alert("Error creando perfil: " + perfilError.message);
+        return;
+    }
+
+    alert("Registro exitoso");
+    toggleAuthMode();
+}
 
         } else {
 

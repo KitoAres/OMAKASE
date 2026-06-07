@@ -4,84 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMAKASE - Bienestar Digital</title>
-    <!-- Se corrigió la ruta eliminando "public/" para que coincida con la raíz del despliegue -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Incluimos la librería oficial de Supabase desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <header>
-        <div class="logo">OMAKASE</div>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Panel Principal</a></li>
-                <li><a href="#mindfulness">Mindfulness</a></li>
-                <li><a href="#economia">Economía de Fichas</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="inicio" class="dashboard-section">
-            <h1>Bienvenido a tu Espacio Seguro</h1>
-            <p>Monitorea y mejora tu atención sostenida.</p>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Tiempo de Pantalla</h3>
-                    <p class="stat-value">1h 45m</p>
+    <!-- PANTALLA DE AUTENTICACIÓN -->
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-card">
+            <h2 id="auth-title">Iniciar Sesión en OMAKASE</h2>
+            <form id="auth-form">
+                <div class="form-group" id="name-field" style="display: none;">
+                    <label for="auth-name">Nombre Completo</label>
+                    <input type="text" id="auth-name" placeholder="Tu nombre">
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-brain"></i>
-                    <h3>Nivel de Ansiedad</h3>
-                    <p class="stat-value">Bajo</p>
+                <div class="form-group">
+                    <label for="auth-email">Correo Electrónico</label>
+                    <input type="email" id="auth-email" required placeholder="correo@ejemplo.com">
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-coins"></i>
-                    <h3>Fichas Ganadas</h3>
-                    <p class="stat-value">320</p>
+                <div class="form-group">
+                    <label for="auth-password">Contraseña</label>
+                    <input type="password" id="auth-password" required placeholder="******">
                 </div>
-            </div>
-        </section>
+                <button type="submit" id="btn-auth-submit" class="btn-primary">Ingresar</button>
+            </form>
+            <p id="auth-toggle">¿No tienes una cuenta? <span onclick="toggleAuthMode()">Regístrate aquí</span></p>
+        </div>
+    </div>
 
-        <section id="mindfulness" class="module-section">
-            <h2>Técnicas Mindfulness</h2>
-            <div class="action-grid">
-                <div class="action-card">
-                    <h3>Atención Plena</h3>
-                    <p>Ejercicio guiado de 5 minutos.</p>
-                    <button class="btn-primary">Iniciar Sesión</button>
-                </div>
-                <div class="action-card">
-                    <h3>Respiración Intermitente</h3>
-                    <p>Reduce la sobrecarga cognitiva.</p>
-                    <button class="btn-primary">Iniciar Sesión</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="economia" class="module-section">
-            <h2>Gestión de Hábitos</h2>
-            <div class="tasks-container">
-                <h3>Misiones Activas</h3>
-                <ul class="task-list">
-                    <li>
-                        <span><i class="fas fa-book"></i> Leer 20 páginas</span>
-                        <span class="reward">+50 Fichas</span>
-                    </li>
-                    <li>
-                        <span><i class="fas fa-running"></i> 30 min de ejercicio</span>
-                        <span class="reward">+100 Fichas</span>
-                    </li>
-                    <li>
-                        <span><i class="fas fa-bed"></i> Dormir 8 horas</span>
-                        <span class="reward">+80 Fichas</span>
-                    </li>
+    <!-- PANTALLA PRINCIPAL DE LA APP (OCULTA POR DEFECTO) -->
+    <div id="app-container" style="display: none;">
+        <header>
+            <div class="logo">OMAKASE</div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Panel Principal</a></li>
+                    <li><a href="#mindfulness">Mindfulness</a></li>
+                    <li><a href="#economia">Economía de Fichas</a></li>
+                    <li id="menu-admin" style="display: none;"><a href="#admin-panel" style="color: #ff7675;"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    <li><a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
                 </ul>
-            </div>
-        </section>
-    </main>
+            </nav>
+        </header>
 
-    <!-- Se corrigió la ruta eliminando "public/" para cargar la funcionalidad correctamente -->
+        <main>
+            <!-- Panel Principal -->
+            <section id="inicio" class="dashboard-section">
+                <h1>Bienvenido a tu Espacio Seguro</h1>
+                <p>Monitorea y mejora tu atención sostenida.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Tiempo de Pantalla</h3>
+                        <p class="stat-value">1h 45m</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>Nivel de Ansiedad</h3>
+                        <p class="stat-value">Bajo</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-coins"></i>
+                        <h3>Fichas Ganadas</h3>
+                        <p class="stat-value" id="user-tokens">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Admin (Oculta para usuarios normales) -->
+            <section id="admin-panel" class="module-section" style="display: none;">
+                <h2><i class="fas fa-user-shield"></i> Panel de Administración General</h2>
+                <p>Monitoreo global de la plataforma.</p>
+                <div class="tasks-container">
+                    <h3>Usuarios Registrados en OMAKASE</h3>
+                    <ul class="task-list" id="admin-users-list">
+                        <!-- Aquí se cargarán dinámicamente todos los usuarios -->
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>

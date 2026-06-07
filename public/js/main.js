@@ -160,6 +160,15 @@ async function configurarInterfazUsuario(user) {
             .select("rol,nombre_completo")
             .eq("id", user.id)
             .single();
+    if (perfil) {
+
+    document.getElementById(
+        "profile-name"
+    ).innerText =
+        perfil.nombre_completo;
+
+    actualizarNivelUsuario();
+}
 
     if (
         perfil &&
@@ -405,3 +414,48 @@ function cargarDatosLocales() {
         );
     }
 }
+
+
+function actualizarNivelUsuario() {
+
+    const fichas =
+        Number(
+            localStorage.getItem(
+                "omakase_fichas"
+            )
+        ) || 0;
+
+    let nivel =
+        "Aprendiz Digital";
+
+    if (fichas >= 100)
+        nivel =
+        "Explorador Consciente";
+
+    if (fichas >= 300)
+        nivel =
+        "Maestro del Enfoque";
+
+    if (fichas >= 600)
+        nivel =
+        "Guardián OMAKASE";
+
+    const nivelElemento =
+        document.getElementById(
+            "profile-level"
+        );
+
+    const fichasElemento =
+        document.getElementById(
+            "profile-tokens"
+        );
+
+    if (nivelElemento)
+        nivelElemento.innerText =
+            nivel;
+
+    if (fichasElemento)
+        fichasElemento.innerText =
+            fichas;
+}
+

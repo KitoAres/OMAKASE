@@ -143,12 +143,6 @@ header{
     color:#10b981;
 }
 
-.logo::after{
-    content:" >|< ";
-    color:white;
-    font-size:1rem;
-    margin-left:8px;
-}
 
 nav ul{
     display:flex;

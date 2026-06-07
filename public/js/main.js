@@ -1,297 +1,407 @@
-:root {
-    --primary-bg: #f4f7f6;
-    --header-bg: #1e293b;
-    --text-main: #334155;
-    --accent: #10b981;
-    --accent-hover: #059669;
-    --card-bg: #ffffff;
-}
+// =====================================
+// CONFIGURACIÓN SUPABASE
+// =====================================
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+const SUPABASE_URL = "https://oixnuwadkqoycuxbkufh.supabase.co";
 
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--primary-bg);
-    color: var(--text-main);
-    line-height: 1.6;
-}
+const SUPABASE_ANON_KEY =
+"sb_publishable_PYDGVjNVtoutiRs8mBT_mw_ExT9UxAb";
 
-/* =========================
-   LOGIN / REGISTRO
-========================= */
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-.auth-wrapper {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
+let isSignUpMode = false;
 
-.auth-card {
-    width: 100%;
-    max-width: 450px;
-    background: white;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,.12);
-}
+// =====================================
+// INICIO
+// =====================================
 
-.auth-card h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #0f172a;
-}
+document.addEventListener("DOMContentLoaded", async () => {
 
-.form-group {
-    margin-bottom: 18px;
-}
+    cargarDatosLocales();
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
 
-.form-group input {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #dbe4ee;
-    border-radius: 12px;
-    font-size: 15px;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-/* =========================
-   BOTONES
-========================= */
-
-button,
-.btn-primary {
-    cursor: pointer !important;
-}
-
-.btn-primary {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: var(--accent);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    transition: .25s;
-}
-
-.btn-primary:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-}
-
-#auth-toggle {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#auth-toggle span {
-    color: var(--accent);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#auth-toggle span:hover {
-    text-decoration: underline;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-    background: linear-gradient(135deg,#1e293b,#334155);
-    color: white;
-    padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,.15);
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #10b981;
-}
-
-.logo::after {
-    content: " >|< ";
-    color: white;
-    font-size: 1rem;
-    margin-left: 8px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-}
-
-nav a {
-    color: #e2e8f0;
-    text-decoration: none;
-    font-weight: 600;
-    transition: .3s;
-}
-
-nav a:hover {
-    color: #10b981;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-main {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 20px;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.dashboard-section {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
-}
-
-.dashboard-section h1 {
-    margin-bottom: 10px;
-    color: #0f172a;
-}
-
-.dashboard-section p {
-    color: #64748b;
-}
-
-/* =========================
-   TARJETAS
-========================= */
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-    gap: 20px;
-    margin-top: 25px;
-}
-
-.stat-card {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
-    transition: .3s;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-card i {
-    font-size: 2.8rem;
-    color: #10b981;
-    margin-bottom: 12px;
-}
-
-.stat-card h3 {
-    margin-bottom: 10px;
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #0f172a;
-}
-
-/* =========================
-   MODULOS
-========================= */
-
-.module-section {
-    margin-top: 35px;
-}
-
-.tasks-container {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
-}
-
-.tasks-container h3 {
-    margin-bottom: 15px;
-}
-
-.tasks-container input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #dbe4ee;
-    margin-top: 5px;
-}
-
-.task-list {
-    list-style: none;
-}
-
-.task-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.task-list li:last-child {
-    border-bottom: none;
-}
-
-/* =========================
-   SCROLL
-========================= */
-
-html {
-    scroll-behavior: smooth;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-
-    header {
-        flex-direction: column;
-        gap: 15px;
+    if (session) {
+        configurarInterfazUsuario(session.user);
     }
 
-    nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+    // LOGIN / REGISTRO
 
-    .dashboard-section {
-        padding: 20px;
+    document
+        .getElementById("auth-form")
+        .addEventListener("submit", manejarAutenticacion);
+
+    // LOGOUT
+
+    document
+        .getElementById("btn-logout")
+        .addEventListener("click", cerrarSesion);
+
+});
+
+// =====================================
+// LOGIN / REGISTRO
+// =====================================
+
+async function manejarAutenticacion(e) {
+
+    e.preventDefault();
+
+    const email =
+        document.getElementById("auth-email").value;
+
+    const password =
+        document.getElementById("auth-password").value;
+
+    const nombre =
+        document.getElementById("auth-name").value;
+
+    if (isSignUpMode) {
+
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+                email,
+                password
+            });
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        if (data.user) {
+
+            await supabaseClient
+                .from("perfiles_usuarios")
+                .insert([
+                    {
+                        id: data.user.id,
+                        nombre_completo: nombre
+                    }
+                ]);
+
+            alert("Registro exitoso");
+            toggleAuthMode();
+        }
+
+    } else {
+
+        const { data, error } =
+            await supabaseClient
+                .auth
+                .signInWithPassword({
+                    email,
+                    password
+                });
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        if (data.user) {
+            configurarInterfazUsuario(data.user);
+        }
+    }
+}
+
+// =====================================
+// CAMBIO LOGIN / REGISTRO
+// =====================================
+
+window.toggleAuthMode = () => {
+
+    isSignUpMode = !isSignUpMode;
+
+    document.getElementById("auth-title").innerText =
+        isSignUpMode
+            ? "Crear Cuenta en OMAKASE"
+            : "Iniciar Sesión en OMAKASE";
+
+    document.getElementById("name-field").style.display =
+        isSignUpMode
+            ? "block"
+            : "none";
+
+    document.getElementById("btn-auth-submit").innerText =
+        isSignUpMode
+            ? "Registrar Cuenta"
+            : "Ingresar";
+
+    document.getElementById("auth-toggle").innerHTML =
+        isSignUpMode
+            ? "¿Ya tienes cuenta? <span onclick='toggleAuthMode()'>Inicia sesión aquí</span>"
+            : "¿No tienes una cuenta? <span onclick='toggleAuthMode()'>Regístrate aquí</span>";
+};
+
+// =====================================
+// INTERFAZ USUARIO
+// =====================================
+
+async function configurarInterfazUsuario(user) {
+
+    document.getElementById("auth-container")
+        .style.display = "none";
+
+    document.getElementById("app-container")
+        .style.display = "block";
+
+    inicializarTiempoPantalla();
+
+    const { data: perfil } =
+        await supabaseClient
+            .from("perfiles_usuarios")
+            .select("rol,nombre_completo")
+            .eq("id", user.id)
+            .single();
+
+    if (
+        perfil &&
+        perfil.rol === "admin"
+    ) {
+
+        document.getElementById("menu-admin")
+            .style.display = "block";
+
+        document.getElementById("admin-panel")
+            .style.display = "block";
+
+        cargarUsuariosAdmin();
+    }
+}
+
+// =====================================
+// ADMIN
+// =====================================
+
+async function cargarUsuariosAdmin() {
+
+    const { data: usuarios } =
+        await supabaseClient
+            .from("perfiles_usuarios")
+            .select(
+                "nombre_completo,fecha_registro,rol"
+            );
+
+    const lista =
+        document.getElementById(
+            "admin-users-list"
+        );
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    usuarios.forEach(usuario => {
+
+        lista.innerHTML += `
+            <li>
+                <span>
+                    <i class="fas fa-user"></i>
+                    <strong>${usuario.nombre_completo}</strong>
+                    (${usuario.rol})
+                </span>
+
+                <span>
+                    ${new Date(
+                        usuario.fecha_registro
+                    ).toLocaleDateString()}
+                </span>
+            </li>
+        `;
+    });
+}
+
+// =====================================
+// LOGOUT
+// =====================================
+
+async function cerrarSesion(e) {
+
+    e.preventDefault();
+
+    await supabaseClient.auth.signOut();
+
+    window.location.reload();
+}
+
+// =====================================
+// TIEMPO DE PANTALLA
+// =====================================
+
+function inicializarTiempoPantalla() {
+
+    const boton =
+        document.getElementById(
+            "calculate-screen-time"
+        );
+
+    if (!boton) return;
+
+    boton.addEventListener("click", () => {
+
+        const tiktok =
+            Number(
+                document.getElementById(
+                    "tiktok-hours"
+                ).value
+            ) || 0;
+
+        const facebook =
+            Number(
+                document.getElementById(
+                    "facebook-hours"
+                ).value
+            ) || 0;
+
+        const instagram =
+            Number(
+                document.getElementById(
+                    "instagram-hours"
+                ).value
+            ) || 0;
+
+        const youtube =
+            Number(
+                document.getElementById(
+                    "youtube-hours"
+                ).value
+            ) || 0;
+
+        const total =
+            tiktok +
+            facebook +
+            instagram +
+            youtube;
+
+        let fichas = 0;
+
+        if (total <= 14) {
+            fichas = 100;
+        }
+        else if (total <= 21) {
+            fichas = 50;
+        }
+        else {
+            fichas = 10;
+        }
+
+        let objetivos = 0;
+
+        if (total <= 14) {
+            objetivos = 1;
+        }
+
+        actualizarDashboard(
+            total,
+            fichas,
+            objetivos
+        );
+
+        guardarDatosLocales(
+            total,
+            fichas,
+            objetivos
+        );
+
+    });
+
+}
+
+// =====================================
+// DASHBOARD
+// =====================================
+
+function actualizarDashboard(
+    total,
+    fichas,
+    objetivos
+) {
+
+    const pantalla =
+        document.getElementById(
+            "screen-time-card"
+        );
+
+    const monedas =
+        document.getElementById(
+            "user-tokens"
+        );
+
+    const metas =
+        document.getElementById(
+            "completed-goals"
+        );
+
+    if (pantalla)
+        pantalla.innerText = total + " h";
+
+    if (monedas)
+        monedas.innerText = fichas;
+
+    if (metas)
+        metas.innerText = objetivos;
+}
+
+// =====================================
+// LOCAL STORAGE
+// =====================================
+
+function guardarDatosLocales(
+    total,
+    fichas,
+    objetivos
+) {
+
+    localStorage.setItem(
+        "omakase_total",
+        total
+    );
+
+    localStorage.setItem(
+        "omakase_fichas",
+        fichas
+    );
+
+    localStorage.setItem(
+        "omakase_objetivos",
+        objetivos
+    );
+}
+
+function cargarDatosLocales() {
+
+    const total =
+        localStorage.getItem(
+            "omakase_total"
+        );
+
+    const fichas =
+        localStorage.getItem(
+            "omakase_fichas"
+        );
+
+    const objetivos =
+        localStorage.getItem(
+            "omakase_objetivos"
+        );
+
+    if (
+        total ||
+        fichas ||
+        objetivos
+    ) {
+
+        actualizarDashboard(
+            total || 0,
+            fichas || 0,
+            objetivos || 0
+        );
     }
 }

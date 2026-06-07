@@ -356,6 +356,8 @@ function actualizarDashboard(
 
     if (metas)
         metas.innerText = objetivos;
+
+    actualizarNivelUsuario();
 }
 
 // =====================================

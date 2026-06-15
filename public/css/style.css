@@ -19,7 +19,13 @@ html{
 
 body{
     font-family:'Segoe UI',system-ui,sans-serif;
-    background:var(--primary-bg);
+
+    background-image: url('../img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
     color:var(--text-main);
     line-height:1.6;
 }

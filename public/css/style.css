@@ -1,7 +1,7 @@
 :root {
     --primary-bg: #f4f7f6;
     --header-bg: #1e293b;
-    --text-main: #334155;
+    --text-main: #e2e8f0;
     --accent: #10b981;
     --accent-hover: #059669;
     --card-bg: #ffffff;
@@ -179,14 +179,14 @@ main{
 }
 
 .dashboard-section{
-    background:white;
+    background:#111827;
     border-radius:20px;
     padding:30px;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 .dashboard-section h1{
-    color:#0f172a;
+    color:white;
     margin-bottom:10px;
 }
 
@@ -207,7 +207,7 @@ main{
 }
 
 .stat-card{
-    background:white;
+    background:#1e293b;
     border-radius:18px;
     padding:25px;
     text-align:center;
@@ -232,7 +232,7 @@ main{
 .stat-value{
     font-size:2rem;
     font-weight:800;
-    color:#0f172a;
+    color:white;
 }
 
 /* ==========================
@@ -244,7 +244,7 @@ main{
 }
 
 .tasks-container{
-    background:white;
+    background:#1e293b;
     padding:25px;
     border-radius:20px;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
@@ -276,7 +276,7 @@ main{
 ========================== */
 
 .feature-card{
-    background:white;
+    background:#1e293b;
     border-radius:18px;
     padding:25px;
     box-shadow:0 8px 20px rgba(0,0,0,.08);
@@ -327,7 +327,7 @@ main{
 ========================== */
 
 .profile-card{
-    background:white;
+    background:#1e293b;
     border-radius:20px;
     padding:25px;
     margin-bottom:25px;
